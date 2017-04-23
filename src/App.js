@@ -1,4 +1,96 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+class App extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            increasing: false
+        }
+    }
+    update() {
+        ReactDOM.render(<App val={this.props.val + 1} />, document.getElementById('root'))
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({increasing: nextProps.val > this.props.val})
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.val % 5 === 0;
+    }
+    render() {
+        console.log(this.state.increasing)
+        return <button onClick={this.update.bind(this)}>{this.props.val} </button>
+    } 
+    componentDidUpdate(prevProps, prevState) {
+        console.log(`previousProps: ${prevProps.val}`)
+    }
+    
+}
+
+App.defaultProps = {val: 0}
+
+export default App
+
+/*import React from 'react';
+import ReactDOM from 'react-dom';
+
+class App extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            val: 0
+        }
+        this.update = this.update.bind(this)
+    }
+    update() {
+        this.setState({
+            val: this.state.val + 1
+        })
+    }
+    componentWillMount() {
+        console.log('componentWillMount');
+        this.setState({m: 2})
+    }
+    render() {
+        console.log('render');
+        return <button onClick={this.update}>{this.state.val * this.state.m} </button>
+    }
+    componentDidMount() {
+        console.log('componentDidMount');
+        //console.log(ReactDOM.findDOMNode(this));
+        this.increment = setInterval(this.update,500)
+    }
+    componentWillUnmount() {
+        console.log('componentWillUnMount');
+        clearInterval(this.increment)
+    }
+
+}
+
+class Wrapper extends React.Component {
+    
+    mount() {
+        ReactDOM.render(<App />, document.getElementById('app'))
+    }
+    unmount() {
+        ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+    }
+    
+    render() {
+        return(
+            <div>
+                <button onClick={this.mount.bind(this)} >Mount</button>
+                <button onClick={this.unmount.bind(this)} >UnMount</button>
+                <div id='app' ></div>
+            </div>
+        )
+    }
+}
+
+//export default App
+export default Wrapper*/
+
+/*
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -16,15 +108,44 @@ class App extends React.Component {
         })
     }
     componentWillMount() {
-        
+        console.log('componentWillMount');
     }
     render() {
         console.log('render');
         return <button onClick={this.update}>{this.state.val} </button>
     }
+    componentDidMount() {
+        console.log('componentDidMount');
+    }
+    componentWillUnmount() {
+        console.log('componentWillUnMount');
+    }
+
 }
 
-export default App
+class Wrapper extends React.Component {
+    
+    mount() {
+        ReactDOM.render(<App />, document.getElementById('app'))
+    }
+    unmount() {
+        ReactDOM.unmountComponentAtNode(document.getElementById('app'))
+    }
+    
+    render() {
+        return(
+            <div>
+                <button onClick={this.mount.bind(this)} >Mount</button>
+                <button onClick={this.unmount.bind(this)} >UnMount</button>
+                <div id='app' ></div>
+            </div>
+        )
+    }
+}
+
+//export default App
+export default Wrapper
+*/
 
 /*import React from 'react';
 import ReactDOM from 'react-dom';
